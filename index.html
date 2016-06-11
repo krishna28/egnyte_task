@@ -5,7 +5,9 @@
     <title>Simple folder view</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstarp used for styling page -->
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <!-- custom styling page -->
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -29,18 +31,21 @@
 
             </thead>
             <tbody>
-               <tr ng-if="vm.parentObject.fileList.length<=0">
-               	<td colspan="2"><h3>No Items to display,please create using new folder button</h3></td>
-               </tr>
+                <tr ng-if="vm.parentObject.fileList.length<=0">
+                    <td colspan="2">
+                        <h3>No Items to display,please create using new folder button</h3>
+                    </td>
+                </tr>
                 <tr ng-repeat="item in vm.parentObject.fileList track by $index">
                     <td style="width:10%">
                         <input type="checkbox" name="filename" ng-model="item.value" ng-change="vm.parentObject.checkIfAllChecked()" />
                     </td>
                     <td style="width:90%">
-                        <div ng-if="!item.newForm && !item.renameForm">{{item.label}}</div>
+                        <div class="ng-cloak" ng-if="!item.newForm && !item.renameForm"><span ng-bind="item.label"></span>
+                        </div>
                         <form ng-if="item.newForm || item.renameForm" name="newForm" class="form-inline" role="form">
                             <div class="form-group">
-                                <input type="text" ng-model="vm.parentObject.fileList[$index].label" class="form-control" id="filename">
+                                <input type="text" ng-model="vm.parentObject.fileList[$index].label" class="form-control" custom-focus id="filename">
                             </div>
 
                             <button type="submit" ng-if="item.newForm" class="btn btn-default" ng-click="vm.parentObject.createFile($index)">Create</button>
@@ -59,10 +64,15 @@
         </table>
 
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    
+    <!-- Angular js file for achieving two data binding and other related task-->
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <!-- Main custom file used for writing logic for achieving the required task-->
     <script src="app.js"></script>
+    <!--this directive is used to set autofocus to the input field-->
+    <script src="directive.js"></script>
 </body>
 
 </html>
