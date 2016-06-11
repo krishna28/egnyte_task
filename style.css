@@ -1,0 +1,22 @@
+body{
+    margin-top: 70px;
+}
+table{
+	width:100%;
+	border:2px
+}
+table,
+th,
+td {
+    border: 2px solid black;
+	
+}
+
+thead {
+    height: 100px;
+}
+
+td,
+th {
+    padding: 20px;
+}
