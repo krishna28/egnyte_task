@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body ng-app="fileManager" ng-controller="MainController">
+<body ng-app="fileManager" ng-controller="MainController as vm">
 
     <div class="container">
 
@@ -18,35 +18,38 @@
             <thead>
                 <tr>
                     <th style="width:10%">
-                        <input type="checkbox" name="allFileCheck" ng-model="parentObject.allFileCheck" ng-change="parentObject.selectAllFiles()" />
+                        <input type="checkbox" name="allFileCheck" ng-model="vm.parentObject.allFileCheck" ng-change="vm.parentObject.selectAllFiles()" />
                     </th>
                     <th style="width:90%">
-                        <button class="btn btn-primary" ng-click="parentObject.rename()" ng-disabled="!parentObject.checkIfAnyChecked()">Rename</button>
-                        <button class="btn btn-primary" ng-click="parentObject.remove()" ng-disabled="!parentObject.checkIfAnyChecked()">Delete</button>
-                        <button class="btn btn-primary pull-right" ng-click="parentObject.add()" ng-disabled="parentObject.newButtonStatus">New Folder</button>
+                        <button class="btn btn-primary" ng-click="vm.parentObject.rename()" ng-disabled="!vm.parentObject.checkIfAnyChecked()">Rename</button>
+                        <button class="btn btn-primary" ng-click="vm.parentObject.remove()" ng-disabled="!vm.parentObject.checkIfAnyChecked()">Delete</button>
+                        <button class="btn btn-primary pull-right" ng-click="vm.parentObject.add()" ng-disabled="vm.parentObject.newButtonStatus">New Folder</button>
                     </th>
                 </tr>
 
             </thead>
             <tbody>
-                <tr ng-repeat="item in parentObject.fileList track by $index">
+               <tr ng-if="vm.parentObject.fileList.length<=0">
+               	<td colspan="2"><h3>No Items to display,please create using new folder button</h3></td>
+               </tr>
+                <tr ng-repeat="item in vm.parentObject.fileList track by $index">
                     <td style="width:10%">
-                        <input type="checkbox" name="filename" ng-model="item.value" ng-change="parentObject.checkIfAllChecked()" />
+                        <input type="checkbox" name="filename" ng-model="item.value" ng-change="vm.parentObject.checkIfAllChecked()" />
                     </td>
                     <td style="width:90%">
                         <div ng-if="!item.newForm && !item.renameForm">{{item.label}}</div>
                         <form ng-if="item.newForm || item.renameForm" name="newForm" class="form-inline" role="form">
                             <div class="form-group">
-                                <input type="text" ng-model="parentObject.fileList[$index].label" class="form-control" id="filename">
+                                <input type="text" ng-model="vm.parentObject.fileList[$index].label" class="form-control" id="filename">
                             </div>
 
-                            <button type="submit" ng-if="item.newForm" class="btn btn-default" ng-click="parentObject.createFile($index)">Create</button>
+                            <button type="submit" ng-if="item.newForm" class="btn btn-default" ng-click="vm.parentObject.createFile($index)">Create</button>
 
-                            <button type="submit" ng-if="item.renameForm" class="btn btn-default" ng-click="parentObject.saveFile($index)">Save</button>
+                            <button type="submit" ng-if="item.renameForm" class="btn btn-default" ng-click="vm.parentObject.saveFile($index)">Save</button>
 
-                            <button type="submit" ng-if="item.newForm" class="btn btn-default" ng-click="parentObject.cancelFileCreation()">Cancel</button>
+                            <button type="submit" ng-if="item.newForm" class="btn btn-default" ng-click="vm.parentObject.cancelFileCreation()">Cancel</button>
 
-                            <button type="submit" ng-if="item.renameForm" class="btn btn-default" ng-click="parentObject.cancel($index)">Cancel</button>
+                            <button type="submit" ng-if="item.renameForm" class="btn btn-default" ng-click="vm.parentObject.cancel($index)">Cancel</button>
                         </form>
                     </td>
                 </tr>
